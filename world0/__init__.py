@@ -18,6 +18,8 @@ def create_app(config=None):
     if config:
         app.config.from_object(config)
 
+    app.db_session = create_db_session(app.config.get('DATABASE_URI'))
+
     @app.teardown_appcontext
     def teardown_appcontext(response):
         app.db_session.remove()
